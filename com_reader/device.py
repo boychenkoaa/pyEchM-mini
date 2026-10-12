@@ -101,6 +101,11 @@ class Device:
         self._last_read_ns = 0
         self.parser = FrameParser(len(config.measurement.channels), config.protocol.data_terminators)
 
+    @property
+    def is_running(self) -> bool:
+        """Whether the serial owner may still be accessing the port."""
+        return self._thread is not None and self._thread.is_alive()
+
     def _trace(self, direction: str, data: bytes) -> None:
         if self._trace_file is not None and self._trace_error is None:
             record = {"timestamp": datetime.now(timezone.utc).isoformat(), "direction": direction,

@@ -1,0 +1,2 @@
+-r requirements.txt
+questionary==2.1.1
